@@ -152,7 +152,7 @@ document.getElementById("btnAgregar").addEventListener("click", () => {
 
 		tabla.appendChild(
 			crearFilaTabla(desc, ancho, alto, modelo, Math.ceil(precio))
-		);
+			);
 	});
 
 	descInput.value = "";
@@ -179,16 +179,16 @@ btnGenerar.addEventListener("click", () => {
 const modeloBadge = tr.children[3].textContent.trim(); // índice corregido
 const precioNum = Number(
 	tr.children[4].textContent.replace(/[^0-9.]/g, "")
-);
+	);
 
-		if (!grupos[modeloBadge]) {
-			let key = Object.keys(nombres).find(k => nombres[k] === modeloBadge);
-			grupos[modeloBadge] = { color: colores[key], items: [], subtotal: 0 };
-		}
+if (!grupos[modeloBadge]) {
+	let key = Object.keys(nombres).find(k => nombres[k] === modeloBadge);
+	grupos[modeloBadge] = { color: colores[key], items: [], subtotal: 0 };
+}
 
-		grupos[modeloBadge].items.push({ desc, precio: precioNum });
-		grupos[modeloBadge].subtotal += precioNum;
-	});
+grupos[modeloBadge].items.push({ desc, precio: precioNum });
+grupos[modeloBadge].subtotal += precioNum;
+});
 
 	gruposContainer.innerHTML = "";
 
@@ -238,9 +238,9 @@ const precioNum = Number(
 
 	const folio = 1000 + Math.floor(Math.random() * 9000);
 	document.getElementById("badge-folio").innerText =
-		`COTIZACIÓN #${folio} — ${fechaCorta()}`;
+`COTIZACIÓN #${folio} — ${fechaCorta()}`;
 
-	document.querySelector("[data-target='cotizacion']").click();
+document.querySelector("[data-target='cotizacion']").click();
 });
 
 /* ============================================================
@@ -367,6 +367,50 @@ async function compartirImagenWhatsApp() {
 	}, "image/png");
 }
 
-document.getElementById("btnWhatsApp").addEventListener("click", compartirImagenWhatsApp);
+document.getElementById("btnWhatsApp").addEventListener("click", function generarTextoWhatsApp() {
+	const grupos = {};
+	const checks = [...document.querySelectorAll(".filaCheck:checked")];
+
+	if (!checks.length) {
+		alert("Selecciona al menos una medida para compartir.");
+		return;
+	}
+
+	checks.forEach(chk => {
+		const tr = chk.closest("tr");
+		const desc = tr.children[1].textContent.trim();
+		const modelo = tr.children[3].textContent.trim();
+		const precioTexto = tr.children[4].textContent.trim();
+
+		// quitar todo lo que no sea número o punto
+		const precio = Number(precioTexto.replace(/[^0-9.]/g, ""));
+
+		if (!grupos[modelo]) {
+			grupos[modelo] = { items: [], total: 0 };
+		}
+
+		grupos[modelo].items.push({ desc, precio });
+		grupos[modelo].total += precio;
+	});
+
+	let texto = `Cotización – Persianas Vizual Mazatlán ✨\n\n`;
+
+	for (const modelo in grupos) {
+		texto += `${modelo}\n`;
+
+		grupos[modelo].items.forEach(item => {
+			texto += `• ${item.desc} — $${item.precio.toFixed(0)}\n`;
+		});
+
+		// TOTAL EN NEGRITA Y SIN SEPARADORES
+		texto += `*Total ${modelo}: $${grupos[modelo].total.toFixed(0)}*\n\n`;
+	}
+
+	texto += `—\nDemian Cortés\n📲 6691 632 351`;
+
+	const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+	window.open(url, "_blank");
+}
+);
 
 /* ========================== FIN ========================== */
