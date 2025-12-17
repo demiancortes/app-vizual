@@ -113,12 +113,17 @@ function crearFilaTabla(desc, ancho, alto, modelo, precioCeil) {
 	tr.innerHTML = `
 		<td><input type="checkbox" class="filaCheck"></td>
 		<td>${desc}</td>
-		<td><span class="badge" style="background:${colores[modelo]}; color:white;">
-			${nombres[modelo]}</span></td>
+		<td>${ancho.toFixed(2)} x ${alto.toFixed(2)}</td>
+		<td>
+			<span class="badge" style="background:${colores[modelo]}; color:white;">
+				${nombres[modelo]}
+			</span>
+		</td>
 		<td class="text-end">$${precioCeil}.00</td>
 	`;
 	return tr;
 }
+
 
 /* ---------------- agregar medida ---------------- */
 document.getElementById("btnAgregar").addEventListener("click", () => {
@@ -171,8 +176,10 @@ btnGenerar.addEventListener("click", () => {
 	checks.forEach(chk => {
 		const tr = chk.closest("tr");
 		const desc = tr.children[1].textContent.trim();
-		const modeloBadge = tr.children[2].textContent.trim();
-		const precioNum = Number(tr.children[3].textContent.replace(/[^0-9.]/g, ""));
+const modeloBadge = tr.children[3].textContent.trim(); // índice corregido
+const precioNum = Number(
+	tr.children[4].textContent.replace(/[^0-9.]/g, "")
+);
 
 		if (!grupos[modeloBadge]) {
 			let key = Object.keys(nombres).find(k => nombres[k] === modeloBadge);
@@ -264,7 +271,7 @@ function generarFormularioConfiguracion() {
 	html += row("Enrollable Extra (por metro)","enrollableExtra");
 
 	html += `
-		<button class="btn btn-success w-100 py-2 mt-3 mb-5">Guardar</button>
+		<button class="btn btn-primary w-100 py-2 mt-3 mb-5">Guardar</button>
 	</form>`;
 
 	div.innerHTML = html;

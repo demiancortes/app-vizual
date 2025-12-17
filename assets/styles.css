@@ -1,7 +1,12 @@
-:root { --color-verde: #1CC26B; }
+:root {
+	--color-verde: #1CC26B;
+}
 
 /* Base */
-body { background: #f7f7f7; }
+body {
+	background: #f7f7f7;
+	margin: 0;
+}
 
 /* Bottom nav */
 .bottom-nav {
@@ -9,31 +14,50 @@ body { background: #f7f7f7; }
 	bottom: 0;
 	left: 0;
 	width: 100%;
+	
 	background: #fff;
 	border-top: 1px solid #e2e2e2;
 	z-index: 1000;
 }
+
 .bottom-nav .nav-link {
 	color: #7c7c7c;
 	padding: 10px 0;
 	font-size: 14px;
 }
+
 .bottom-nav .nav-link.active {
 	color: var(--color-verde);
 	font-weight: 600;
 }
 
-/* Screens and spacing */
-.screen { padding-bottom: 90px; }
-.btn-primary { background-color: var(--color-verde) !important; border-color: var(--color-verde) !important; }
+/* Screens uniformes */
+.screen {
+	background: #fff;
+	min-height: calc(100vh - 90px);
+	padding-bottom: 90px;
+	box-sizing: border-box;
+}
 
-/* Table horizontal scroll */
-.table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+/* Buttons */
+.btn-primary {
+	background-color: var(--color-verde) !important;
+	border-color: var(--color-verde) !important;
+}
+
+/* Table scroll */
+.table-responsive {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
 
 /* Checkbox column */
-#tabla-wrapper th:first-child, #tabla-wrapper td:first-child { text-align: center; width: 40px; }
+th:first-child,
+td:first-child {
+	
+}
 
-/* Badge header above each model group (small) */
+/* Model badge */
 .model-badge {
 	display: inline-block;
 	padding: 6px 10px;
@@ -44,24 +68,27 @@ body { background: #f7f7f7; }
 	font-size: 0.9rem;
 }
 
-/* Mini table styles (inside groups) */
+/* Group table */
 .group-table {
-	margin-bottom: 10px;
-	border-collapse: collapse;
 	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 10px;
 }
-.group-table th, .group-table td {
+
+.group-table th,
+.group-table td {
 	padding: 8px 10px;
 	border-bottom: 1px solid #f0f0f0;
 }
+
 .group-subtotal {
 	background: #f8f9fa;
 	padding: 8px 10px;
 	font-weight: 700;
 }
 
-/* Make sure images in gallery don't overflow */
-.img-fluid.rounded { max-height: 220px; object-fit: cover; }
-
-/* Small helper */
-.text-muted-small { font-size: 0.92rem; color: #6c757d; }
+/* Helpers */
+.text-muted-small {
+	font-size: 0.92rem;
+	color: #6c757d;
+}
