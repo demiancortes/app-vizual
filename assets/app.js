@@ -87,6 +87,26 @@ const selectAll = document.getElementById("selectAll");
 const btnGenerar = document.getElementById("btnGenerar");
 const gruposContainer = document.getElementById("grupos-modelos");
 
+/* ============================================================
+   🔹 SOPORTE BOTÓN "SIGUIENTE" EN MÓVIL
+   Descripción → Ancho → Alto
+============================================================ */
+function habilitarSiguienteInput(actual, siguiente) {
+	if (!actual || !siguiente) return;
+
+	actual.addEventListener("keydown", (e) => {
+		if (e.key === "Enter") {
+			e.preventDefault();
+			siguiente.focus();
+		}
+	});
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+	habilitarSiguienteInput(descInput, anchoInput);
+	habilitarSiguienteInput(anchoInput, altoInput);
+});
+
 /* ---------------- crear fila ---------------- */
 function crearFilaTabla(desc, ancho, alto, modelo, precioCeil) {
 	const tr = document.createElement("tr");
@@ -209,7 +229,6 @@ btnGenerar.addEventListener("click", () => {
 		gruposContainer.appendChild(subtotal);
 	}
 
-	// Folio + fecha corta en el badge
 	const folio = 1000 + Math.floor(Math.random() * 9000);
 	document.getElementById("badge-folio").innerText =
 		`COTIZACIÓN #${folio} — ${fechaCorta()}`;
